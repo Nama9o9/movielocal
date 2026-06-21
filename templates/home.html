@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="detail-container">
+        {% if user.is_authenticated %}
+            <h1>Willkommen, {{ user.username }}!</h1>
+            <p>Du bist eingeloggt.</p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <h1>Willkommen!</h1>
+            <p>Du bist nicht eingeloggt.</p>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+    </div>
+{% endblock %}

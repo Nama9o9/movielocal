@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Movies{% endblock %}</title>
+{#    <link rel="stylesheet" href="{% static 'ComputerGames/style.css' %}">#}
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}"> Home</a>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

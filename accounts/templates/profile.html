@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Mein Profil{% endblock %}
+
+{% block content %}
+    <h2>Mein Profil</h2>
+
+    {% if user.profile_pic %}
+        <img src="{{ user.profile_pic.url }}" alt="Profilbild" width="150">
+    {% else %}
+        <p>Kein Profilbild hochgeladen.</p>
+    {% endif %}
+
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Vorname:</strong> {{ user.first_name }}</p>
+    <p><strong>Nachname:</strong> {{ user.last_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <a href="{% url 'logout' %}">Logout</a>
+{% endblock %}
