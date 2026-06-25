@@ -39,7 +39,7 @@ def show_shopping_cart(request):
         return render(request, 'shopping_cart.html', context)
 
 
-@login_required(login_url='/useradmin/login/')
+@login_required(login_url='/accounts/login/')
 def pay(request):
     shopping_cart_is_empty = True
     paid = False
