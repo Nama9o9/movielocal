@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ one_movie.name }}{% endblock %}
+
+{% block content %}
+    <div class="detail-container">
+        <h1>{{ one_movie.name }}</h1>
+        <p><strong>Beschreibung:</strong> {{ one_movie.description }}</p>
+        <p><strong>Genre:</strong> {{ one_movie.get_genre_display }}</p>
+        <p><strong>FSK:</strong> {{ one_movie.fsk }}</p>
+        <p><strong>Jahr:</strong> {{ one_movie.year }}</p>
+        <p><strong>Regie:</strong> {{ one_movie.director }}</p>
+        <p><strong>Laufzeit:</strong> {{ one_movie.time }} min</p>
+        <p><strong>Hauptdarstellende:</strong> {{ one_movie.actors }}</p>
+        <p><strong>Preis:</strong> {{ one_movie.price }} €</p>
+        {% if one_movie.details_pdf %}
+             <a href="{{ one_movie.details_pdf.url }}" download>Details als PDF herunterladen</a>
+        {% else %}
+            <p>Keine PDF verfügbar.</p>
+        {% endif %}
+
+        <a href="{% url 'movie_list' %}">← Zurück zur Liste</a>
+    </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <h3>Bewertungen</h3>
+        {% if ratings %}
+            <ul>
+                {% for rating in ratings %}
+                    <li>
+                        <strong>{{ rating.user.username }}</strong> — {{ rating.stars }} Sterne
+                        <p>{{ rating.text }}</p>
+                        <small>
+                            Hilfreich: {{ rating.helpful_count }} |
+                            Nicht hilfreich: {{ rating.not_helpful_count }}
+                        </small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Noch keine Bewertungen vorhanden.</p>
+        {% endif %}
+
+    <h3>Eigene Bewertung abgeben</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ rating_form.as_p }}
+        <button type="submit">Bewertung abgeben</button>
+    </form>
+
+
+{% endblock %}

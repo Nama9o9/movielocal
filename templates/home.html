@@ -17,7 +17,9 @@
         {% if user.is_authenticated %}
             <h1>Willkommen, {{ user.username }}!</h1>
             <p>Du bist eingeloggt.</p>
+            <a href="{% url 'movie_list' %}">Show me the Movies!</a>
             <a href="{% url 'logout' %}">Logout</a>
+
         {% else %}
             <h1>Willkommen!</h1>
             <p>Du bist nicht eingeloggt.</p>

@@ -26,7 +26,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('home/', TemplateView.as_view(template_name='home.html'), name='home'),
     path('shoppingcart/', include('shoppingcart.urls')),
-
+    path('movie/', include('Movie.urls')),
 ]
 
 if settings.DEBUG:
