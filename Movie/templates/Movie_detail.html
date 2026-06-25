@@ -39,6 +39,16 @@
                             Hilfreich: {{ rating.helpful_count }} |
                             Nicht hilfreich: {{ rating.not_helpful_count }}
                         </small>
+                        {% if user.is_authenticated and user != rating.user %}
+                            <form method="post" action="{% url 'vote_rating' rating.pk 1 %}" style="display:inline">
+                        {% csrf_token %}
+                        <button type="submit">👍 Hilfreich</button>
+                        </form>
+                            <form method="post" action="{% url 'vote_rating' rating.pk 0 %}" style="display:inline">
+                                {% csrf_token %}
+                            <button type="submit">👎 Nicht hilfreich</button>
+                        </form>
+        {% endif %}
                     </li>
                 {% endfor %}
             </ul>
@@ -52,6 +62,7 @@
         {{ rating_form.as_p }}
         <button type="submit">Bewertung abgeben</button>
     </form>
+
 
 
 {% endblock %}
