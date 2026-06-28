@@ -18,7 +18,6 @@ class Movie(models.Model):
         ('C', 'Comedy'),
         ('A', 'Action'),
         ('R','Romance'),
-        ('T','Thriller'),
         ('D', 'Drama'),
         ('H', 'Horror'),
 

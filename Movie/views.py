@@ -6,12 +6,44 @@ from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 
 # Create your views here.
 class MovieListView(ListView):
     model = Movie
     context_object_name = 'all_movies'
     template_name = 'Movies_list.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', '')
+        fsk = self.request.GET.get('fsk', '')
+        genre = self.request.GET.get('genre', '')
+
+        movies = Movie.objects.all()
+
+        if query:
+            movies = movies.filter(
+                Q(title__contains=query) |
+                Q(director__contains=query) |
+                Q(actors__contains=query)
+            )
+
+        if fsk:
+            movies = movies.filter(fsk=int(fsk))
+
+        if genre:
+            movies = movies.filter(genre=genre)
+
+        return movies
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        context['selected_fsk'] = self.request.GET.get('fsk', '')
+        context['selected_genre'] = self.request.GET.get('genre', '')
+        return context
 
 class MovieDetailView(LoginRequiredMixin, DetailView):
     model = Movie
@@ -63,3 +95,4 @@ def vote_rating(request, rating_pk, vote_value):
         feedback.save()
 
     return redirect('movie_detail', pk=rating.movie.pk)
+
