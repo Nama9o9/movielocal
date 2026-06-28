@@ -10,6 +10,7 @@
         {% endif %}
         )
     </a>
+     <a href="{% url 'profile' %}">Mein Profil</a>
 {% endblock %}
 
 {% block content %}
@@ -18,6 +19,7 @@
             <h1>Willkommen, {{ user.username }}!</h1>
             <p>Du bist eingeloggt.</p>
             <a href="{% url 'movie_list' %}">Show me the Movies!</a>
+
             <a href="{% url 'logout' %}">Logout</a>
 
         {% else %}
