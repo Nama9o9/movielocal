@@ -6,10 +6,12 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
+from accounts.models import MyUser
+
 
 class ShoppingCart(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
-    myuser = models.ForeignKey(settings.AUTH_USER_MODEL,
+    myuser = models.ForeignKey(MyUser,
                                on_delete=models.CASCADE,
                                )
 
@@ -23,8 +25,8 @@ class ShoppingCart(models.Model):
 
         # Add movie to shopping cart
         product_id = movie.id
-        product_name = movie.titel + ' [' + movie.get_fsk_display() + '] - ' \
-                       + movie.genre + ' (' + str(movie.erscheinungsjahr) + ')'
+        product_name = movie.title + ' [' + movie.get_fsk_display() + '] - ' \
+                       + movie.genre + ' (' + str(movie.year) + ')'
 
         price = movie.price
         price = movie.price
@@ -63,6 +65,6 @@ class Payment(models.Model):
     expiry_date = models.CharField(max_length=7)  # Format: 10/2022
     amount = models.DecimalField(decimal_places=2, max_digits=10)
     timestamp = models.DateTimeField(default=timezone.now)
-    myuser = models.ForeignKey(settings.AUTH_USER_MODEL,
+    myuser = models.ForeignKey(MyUser,
                                on_delete=models.CASCADE,
                                )
