@@ -28,6 +28,7 @@ class Movie(models.Model):
     time = models.IntegerField()
     actors = models.TextField(max_length=2000)
     price = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
+    rental_price = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
     details_pdf = models.FileField(upload_to='movie_pdfs/', null=True, blank=True)
 
     def __str__(self):

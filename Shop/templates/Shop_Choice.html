@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ movie.title }} — Shop auswählen</h2>
+
+{% for availability in availabilities %}
+    <div>
+        <strong>{{ availability.shop.name }}</strong> ({{ availability.shop.address }})
+        —
+        {% if transaction_type == 'Purchase' %}
+            {{ availability.purchase_stock }} verfügbar
+        {% else %}
+            {{ availability.rental_stock }} verfügbar
+        {% endif %}
+
+        <form method="post" action="{% url 'add_to_cart' movie.pk availability.shop.pk transaction_type %}">
+            {% csrf_token %}
+            <button type="submit">Hier {% if transaction_type == 'Purchase' %}kaufen{% else %}ausleihen{% endif %}</button>
+        </form>
+    </div>
+{% empty %}
+    <p>Dieser Film ist aktuell bei keinem Shop verfügbar.</p>
+{% endfor %}
+{% endblock %}

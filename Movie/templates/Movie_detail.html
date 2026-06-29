@@ -12,12 +12,17 @@
         <p><strong>Regie:</strong> {{ one_movie.director }}</p>
         <p><strong>Laufzeit:</strong> {{ one_movie.time }} min</p>
         <p><strong>Hauptdarstellende:</strong> {{ one_movie.actors }}</p>
-        <p><strong>Preis:</strong> {{ one_movie.price }} €</p>
+        <p><strong>Kaufpreis:</strong> {{ one_movie.price }} €</p>
+        <p><strong>Leihgebühr:</strong> {{ one_movie.rental_price }} €</p>
         {% if one_movie.details_pdf %}
              <a href="{{ one_movie.details_pdf.url }}" download>Details als PDF herunterladen</a>
         {% else %}
             <p>Keine PDF verfügbar.</p>
         {% endif %}
+        <div class="movie_actions">
+            <a href="{% url 'select_shop' one_movie.pk 'Purchase' %}">Kaufen</a>
+            <a href="{% url 'select_shop' one_movie.pk 'Rental' %}">Ausleihen</a>
+        </div>
 
         <a href="{% url 'movie_list' %}">← Zurück zur Liste</a>
     </div>

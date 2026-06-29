@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 
 # Create your models here.
@@ -5,8 +6,10 @@ from decimal import Decimal
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.views import generic
 
 from accounts.models import MyUser
+from Shop.models import Shop
 
 
 class ShoppingCart(models.Model):
@@ -51,6 +54,11 @@ class ShoppingCart(models.Model):
 
 
 class ShoppingCartItem(models.Model):
+    TRANSACTION_CHOICES = [
+        ('P', 'Purchase'),
+        ('R', 'Rental')
+    ]
+
     product_id = models.IntegerField()
     product_name = models.CharField(max_length=100)
     price = models.DecimalField(decimal_places=2, max_digits=10)
@@ -58,13 +66,16 @@ class ShoppingCartItem(models.Model):
     shopping_cart = models.ForeignKey(ShoppingCart,
                                       on_delete=models.CASCADE,
                                       )
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True)
+    transaction_type = models.CharField(max_length=1, choices=TRANSACTION_CHOICES,default='P')
+    due_date = models.DateField(null=True, blank=True)
 
+# class Payment(models.Model):
+#     credit_card_number = models.CharField(max_length=19)  # Format: 1234 5678 1234 5678
+#     expiry_date = models.CharField(max_length=7)  # Format: 10/2022
+#     amount = models.DecimalField(decimal_places=2, max_digits=10)
+#     timestamp = models.DateTimeField(default=timezone.now)
+#     myuser = models.ForeignKey(MyUser,
+#                                on_delete=models.CASCADE,
+#                                )
 
-class Payment(models.Model):
-    credit_card_number = models.CharField(max_length=19)  # Format: 1234 5678 1234 5678
-    expiry_date = models.CharField(max_length=7)  # Format: 10/2022
-    amount = models.DecimalField(decimal_places=2, max_digits=10)
-    timestamp = models.DateTimeField(default=timezone.now)
-    myuser = models.ForeignKey(MyUser,
-                               on_delete=models.CASCADE,
-                               )

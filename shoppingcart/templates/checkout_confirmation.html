@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Bestellung abgeschlossen</h2>
+    <p>Bitte bezahl <strong>{{ total }} €</strong> im Shop.</p>
+
+    <ul>
+        {% for item in items %}
+            <li>
+                {{ item.product_name }} — {{ item.shop_name }} ({{ item.transaction_type_display }}) — {{ item.price }} €
+                {% if item.transaction_type == 'Rental' %}
+                    <br>Bitte bis spätestens <strong>{{ item.due_date }}</strong> zurückbringen.
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'home' %}">Zurück zur Startseite</a>
+{% endblock %}

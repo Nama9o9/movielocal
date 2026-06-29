@@ -1,18 +1,5 @@
 {% extends 'base.html' %}
 
-{% block header %}
-    <a style="float: right;" href="{% url 'shopping_cart_show' %}">
-        Shopping Cart (
-        {% if user.is_authenticated %}
-            {{ request.user.count_shopping_cart_items }}
-        {% else %}
-            0
-        {% endif %}
-        )
-    </a>
-     <a href="{% url 'profile' %}">Mein Profil</a>
-{% endblock %}
-
 {% block content %}
     <div class="detail-container">
         {% if user.is_authenticated %}
