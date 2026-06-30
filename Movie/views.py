@@ -1,12 +1,13 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, DetailView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
+from django.urls import reverse
 from .models import Movie, Rating, RatingFeedback
 from .forms import RatingForm
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.db.models import Q
 
 # Create your views here.
 class MovieListView(ListView):
@@ -96,3 +97,35 @@ def vote_rating(request, rating_pk, vote_value):
 
     return redirect('movie_detail', pk=rating.movie.pk)
 
+class RatingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Rating
+    form_class = RatingForm
+    template_name = 'Rating_edit_form.html'
+
+    def test_func(self):
+        # Stellt sicher, dass nur der Ersteller die Bewertung bearbeiten kann
+        rating = self.get_object()
+        return rating.user == self.request.user
+
+    def handle_no_permission(self):
+        messages.error(self.request, 'Du kannst nur deine eigenen Bewertungen bearbeiten.')
+        return redirect('movie_detail', pk=self.get_object().movie.pk)
+
+    def get_success_url(self):
+        return reverse('movie_detail', kwargs={'pk': self.object.movie.pk})
+
+
+class RatingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Rating
+    template_name = 'Rating_confirm_delete.html'
+
+    def test_func(self):
+        rating = self.get_object()
+        return rating.user == self.request.user
+
+    def handle_no_permission(self):
+        messages.error(self.request, 'Du kannst nur deine eigenen Bewertungen löschen.')
+        return redirect('movie_detail', pk=self.get_object().movie.pk)
+
+    def get_success_url(self):
+        return reverse('movie_detail', kwargs={'pk': self.object.movie.pk})

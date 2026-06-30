@@ -54,6 +54,11 @@
                             <button type="submit">👎 Nicht hilfreich</button>
                         </form>
         {% endif %}
+                              {% if user.is_authenticated and user == rating.user %}
+                            <a href="{% url 'rating_edit' rating.pk %}">Bearbeiten</a> |
+                            <a href="{% url 'rating_delete' rating.pk %}">Löschen</a>
+                        {% endif %}
+
                     </li>
                 {% endfor %}
             </ul>

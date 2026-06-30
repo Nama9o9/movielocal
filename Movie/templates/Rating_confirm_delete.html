@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Bewertung löschen{% endblock %}
+
+{% block content %}
+    <h1>Bewertung wirklich löschen?</h1>
+    <p>{{ object.get_text_prefix }} ({{ object.stars }} Sterne)</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Ja, löschen</button>
+        <a href="{% url 'movie_detail' pk=object.movie.pk %}">Abbrechen</a>
+    </form>
+{% endblock %}
