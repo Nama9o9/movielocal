@@ -3,11 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from Movie.models import Movie
 from .forms import MovieForm
-
+from Movie.models import Rating
 
 @login_required
 def cs_movie_list(request):
-    """Übersicht aller Filme für den Kundenservice"""
+
     if not (request.user.role == 'S' or request.user.is_superuser):
         raise PermissionDenied
 
@@ -17,7 +17,7 @@ def cs_movie_list(request):
 
 @login_required
 def cs_movie_create(request):
-    """View zum Hinzufügen eines neuen Films"""
+
     if not (request.user.role == 'S' or request.user.is_superuser):
         raise PermissionDenied
 
@@ -38,7 +38,7 @@ def cs_movie_create(request):
 
 @login_required
 def cs_movie_edit_delete(request, pk):
-    """Kombinierte View zum Bearbeiten und Löschen eines Films"""
+
     can_edit_delete = (request.user.role == 'S' or request.user.is_superuser)
 
     if not can_edit_delete:
@@ -65,3 +65,19 @@ def cs_movie_edit_delete(request, pk):
         'is_create': False
     }
     return render(request, 'customerservice/movie_edit_delete.html', context)
+
+
+@login_required
+def cs_delete_rating(request, rating_id):
+
+    if not (request.user.role == 'S' or request.user.is_superuser):
+        raise PermissionDenied
+
+    rating = get_object_or_404(Rating, pk=rating_id)
+    movie_id = rating.movie.id
+
+    if request.method == 'POST':
+        rating.delete()
+
+
+    return redirect('movie_detail', pk=movie_id)

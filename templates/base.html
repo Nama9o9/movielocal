@@ -20,6 +20,10 @@
     </header>
     <nav>
         <a href="{% url 'home' %}"> Home</a>
+
+        {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
+             | <a href="{% url 'cs_movie_list' %}">Kundenservice (Filmverwaltung)</a>
+        {% endif %}
     </nav>
     {% block content %}
     {% endblock %}
