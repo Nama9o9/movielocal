@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.urls import reverse
-from .models import Movie, Rating, RatingFeedback
+from .models import Movie, Rating, RatingFeedback, RatingReport
 from .forms import RatingForm
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
@@ -129,3 +129,28 @@ class RatingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('movie_detail', kwargs={'pk': self.object.movie.pk})
+
+
+@login_required
+@require_POST
+def report_rating(request, rating_pk):
+    rating = get_object_or_404(Rating, pk=rating_pk)
+
+    # Eigene Bewertung kann man nicht melden
+    if rating.user == request.user:
+        messages.error(request, 'Du kannst deine eigene Bewertung nicht melden.')
+        return redirect('movie_detail', pk=rating.movie.pk)
+
+    # Prüfen ob schon gemeldet
+    if RatingReport.objects.filter(user=request.user, rating=rating).exists():
+        messages.error(request, 'Du hast diese Bewertung bereits gemeldet.')
+        return redirect('movie_detail', pk=rating.movie.pk)
+
+    reason = request.POST.get('reason', '')
+    RatingReport.objects.create(
+        user=request.user,
+        rating=rating,
+        reason=reason,
+    )
+    messages.success(request, 'Bewertung wurde gemeldet.')
+    return redirect('movie_detail', pk=rating.movie.pk)

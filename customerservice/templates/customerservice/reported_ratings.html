@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gemeldete Bewertungen{% endblock %}
+
+{% block content %}
+<h2>Gemeldete Bewertungen</h2>
+
+{% if reports %}
+    <table>
+        <thead>
+            <tr>
+                <th>Film</th>
+                <th>Bewertung von</th>
+                <th>Bewertungstext</th>
+                <th>Sterne</th>
+                <th>Gemeldet von</th>
+                <th>Grund</th>
+                <th>Gemeldet am</th>
+                <th>Aktion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+                <tr>
+                    <td>{{ report.rating.movie.title }}</td>
+                    <td>{{ report.rating.user.username }}</td>
+                    <td>{{ report.rating.get_text_prefix }}</td>
+                    <td>{{ report.rating.stars }} Sterne</td>
+                    <td>{{ report.user.username }}</td>
+                    <td>{% if report.reason %}{{ report.reason }}{% else %}—{% endif %}</td>
+                    <td>{{ report.timestamp|date:"d.m.Y H:i" }}</td>
+                    <td>
+                        <form method="post" action="{% url 'cs_delete_rating' report.rating.pk %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    style="background-color: red; color: white; padding: 4px 8px;"
+                                    onclick="return confirm('Bewertung wirklich löschen?');">
+                                Bewertung löschen
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Keine gemeldeten Bewertungen vorhanden.</p>
+{% endif %}
+
+<br>
+<a href="{% url 'cs_movie_list' %}">Zurück zur Filmliste</a>
+{% endblock %}

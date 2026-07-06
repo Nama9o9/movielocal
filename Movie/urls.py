@@ -7,4 +7,5 @@ urlpatterns = [
     path('rating/<int:rating_pk>/vote/<int:vote_value>/', views.vote_rating, name='vote_rating'),
     path('rating/<int:pk>/edit/', views.RatingUpdateView.as_view(), name='rating_edit'),
     path('rating/<int:pk>/delete/', views.RatingDeleteView.as_view(), name='rating_delete'),
+    path('rating/<int:rating_pk>/report/', views.report_rating, name='report_rating'),
 ]
