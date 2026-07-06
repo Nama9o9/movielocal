@@ -5,33 +5,30 @@
 {% block content %}
     <h1>Alle Movies</h1>
 
-
-      <form method="get">
+    <form method="get" class="search-form">
         <input type="text" name="q" value="{{ query }}" placeholder="Suche nach Titel, Regisseur, Schauspieler...">
 
+        <select name="fsk">
+            <option value="">Alle FSK</option>
+            <option value="0"  {% if selected_fsk == "0"  %}selected{% endif %}>FSK 0</option>
+            <option value="6"  {% if selected_fsk == "6"  %}selected{% endif %}>FSK 6</option>
+            <option value="12" {% if selected_fsk == "12" %}selected{% endif %}>FSK 12</option>
+            <option value="16" {% if selected_fsk == "16" %}selected{% endif %}>FSK 16</option>
+            <option value="18" {% if selected_fsk == "18" %}selected{% endif %}>FSK 18</option>
+        </select>
 
-
-     <select name="fsk">
-        <option value="">Alle FSK</option>
-        <option value="0"  {% if selected_fsk == "0"  %}selected{% endif %}>FSK 0</option>
-        <option value="6"  {% if selected_fsk == "6"  %}selected{% endif %}>FSK 6</option>
-        <option value="12" {% if selected_fsk == "12" %}selected{% endif %}>FSK 12</option>
-        <option value="16" {% if selected_fsk == "16" %}selected{% endif %}>FSK 16</option>
-        <option value="18" {% if selected_fsk == "18" %}selected{% endif %}>FSK 18</option>
-    </select>
-
-
-      <select name="genre">
-    <option value="">Alle Genres</option>
-    <option value="C" {% if selected_genre == "C" %}selected{% endif %}>Comedy</option>
-    <option value="A" {% if selected_genre == "A" %}selected{% endif %}>Action</option>
-    <option value="R" {% if selected_genre == "R" %}selected{% endif %}>Romance</option>
-   <option value="D" {% if selected_genre == "D" %}selected{% endif %}>Drama</option>
-    <option value="H" {% if selected_genre == "H" %}selected{% endif %}>Horror</option>
-</select>
+        <select name="genre">
+            <option value="">Alle Genres</option>
+            <option value="C" {% if selected_genre == "C" %}selected{% endif %}>Comedy</option>
+            <option value="A" {% if selected_genre == "A" %}selected{% endif %}>Action</option>
+            <option value="R" {% if selected_genre == "R" %}selected{% endif %}>Romance</option>
+            <option value="D" {% if selected_genre == "D" %}selected{% endif %}>Drama</option>
+            <option value="H" {% if selected_genre == "H" %}selected{% endif %}>Horror</option>
+        </select>
         <button type="submit">Suchen</button>
     </form>
-{% if query %}
+
+    {% if query %}
         <p>Suchergebnisse für: <strong>{{ query }}</strong></p>
     {% endif %}
 

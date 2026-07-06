@@ -73,8 +73,6 @@ a:focus-visible {
 }
 
 /* ---------- Filmstreifen-Lochung (Signatur-Element) ---------- */
-/* Erzeugt die typischen runden "Sprocket Holes" als
-   wiederholtes Hintergrundmuster am oberen/unteren Rand. */
 .film-strip-edge {
   position: relative;
 }
@@ -278,6 +276,7 @@ td {
 tr:last-child td { border-bottom: none; }
 
 tr:hover td { background-color: var(--color-cream); }
+
 /* ---------- Detailseite mit Bild rechts ---------- */
 .detail-layout {
   display: flex;
@@ -288,6 +287,15 @@ tr:hover td { background-color: var(--color-cream); }
 
 .detail-info {
   flex: 1 1 380px;
+}
+.detail-info h1 {
+  font-size: 3.4rem;
+}
+
+.movie_actions {
+  display: flex;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
 }
 
 .detail-image {
@@ -327,12 +335,17 @@ tr:hover td { background-color: var(--color-cream); }
   margin-top: 0.6rem;
   color: var(--color-ink-soft);
 }
+
 /* ---------- Filmliste (Karten-Grid) ---------- */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1.75rem;
   margin-top: 1.5rem;
+}
+
+.movie-grid p {
+  grid-column: 1 / -1;
 }
 
 .movie-card {
@@ -342,6 +355,7 @@ tr:hover td { background-color: var(--color-cream); }
   text-decoration: none;
 }
 
+.movie-card,
 .movie-card:hover,
 .movie-card:focus-visible {
   text-decoration: none;
@@ -402,9 +416,35 @@ tr:hover td { background-color: var(--color-cream); }
   color: var(--color-ink);
   letter-spacing: 0.3px;
   margin: 0;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.15s ease;
 }
 
 .movie-card:hover .movie-title,
 .movie-card:focus-visible .movie-title {
   color: var(--color-red);
+  transform: translateY(-3px);
+}
+
+/* ---------- Suchformular (eine Reihe) ---------- */
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.search-form input[type="text"] {
+  flex: 2 1 260px;
+  max-width: none;
+}
+
+.search-form select {
+  flex: 1 1 160px;
+}
+
+.search-form button {
+  flex: 0 0 auto;
 }

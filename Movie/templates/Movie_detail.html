@@ -23,14 +23,14 @@
             {% endif %}
 
             <div class="movie_actions">
-                <a href="{% url 'select_shop' one_movie.pk 'Purchase' %}">Kaufen</a>
-                <a href="{% url 'select_shop' one_movie.pk 'Rental' %}">Ausleihen</a>
+                <a class="btn" href="{% url 'select_shop' one_movie.pk 'Purchase' %}">Kaufen</a>
+                <a class="btn" href="{% url 'select_shop' one_movie.pk 'Rental' %}">Ausleihen</a>
             </div>
 
             {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
-                <a href="{% url 'cs_movie_list' %}">← Zurück zur Kundenservice-Liste</a>
+                <a class="btn btn-secondary" href="{% url 'cs_movie_list' %}">← Zurück zur Kundenservice-Liste</a>
             {% else %}
-                <a href="{% url 'movie_list' %}">← Zurück zur Liste</a>
+                <a class="btn btn-secondary" href="{% url 'movie_list' %}">← Zurück zur Liste</a>
             {% endif %}
         </div>
 
@@ -74,6 +74,14 @@
                         Hilfreich: {{ rating.helpful_count }} |
                         Nicht hilfreich: {{ rating.not_helpful_count }}
                     </small>
+
+                    {% if user.is_authenticated and user != rating.user %}
+                        <form method="post" action="{% url 'report_rating' rating.pk %}">
+                            {% csrf_token %}
+                            <input type="text" name="reason" placeholder="Grund der Meldung (optional)" maxlength="300">
+                            <button type="submit">⚠️ Melden</button>
+                        </form>
+                    {% endif %}
 
                     {% if user.is_authenticated and user == rating.user %}
                         <a href="{% url 'rating_edit' rating.pk %}">Bearbeiten</a> |

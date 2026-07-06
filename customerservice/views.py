@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from Movie.models import Movie
+from Movie.models import Movie, RatingReport
 from .forms import MovieForm
 from Movie.models import Rating
 
@@ -81,3 +81,12 @@ def cs_delete_rating(request, rating_id):
 
 
     return redirect('movie_detail', pk=movie_id)
+
+@login_required
+def cs_reported_ratings(request):
+    if not (request.user.role == 'S' or request.user.is_superuser):
+        raise PermissionDenied
+
+    reports = RatingReport.objects.select_related('rating', 'rating__user', 'rating__movie', 'user').all()
+
+    return render(request, 'customerservice/reported_ratings.html', {'reports': reports})
