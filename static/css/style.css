@@ -1,0 +1,410 @@
+/* =========================================================
+   movielocal – Kino-Theme
+   Rot (Samtvorhang) + Creme/Beige, Filmstreifen-Lochung als
+   wiederkehrendes Signatur-Element.
+   ========================================================= */
+
+:root {
+  /* Farben */
+  --color-red: #A31621;        /* Kinorot / Samtvorhang */
+  --color-red-dark: #7A0F19;   /* dunkleres Rot für Hover/Aktiv */
+  --color-red-light: #C33642;  /* helleres Rot für Verläufe/Akzente */
+  --color-cream: #F6EFE2;      /* Haupt-Hintergrund */
+  --color-cream-light: #FFFBF3;/* Karten-Hintergrund */
+  --color-beige: #E9DEC9;      /* Trennlinien, Border */
+  --color-ink: #2B2320;        /* Haupttext, fast schwarz-braun */
+  --color-ink-soft: #6B6259;   /* Sekundärtext */
+  --color-gold: #C8A24A;       /* dezenter Glanz-Akzent, sparsam */
+
+  /* Typografie */
+  --font-display: 'Bebas Neue', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Sonstiges */
+  --radius: 10px;
+  --shadow-soft: 0 4px 14px rgba(43, 35, 32, 0.12);
+  --shadow-strong: 0 8px 24px rgba(122, 15, 25, 0.25);
+}
+
+/* ---------- Reset / Grundlagen ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0.5px;
+  color: var(--color-red);
+  margin: 0 0 0.5em;
+  line-height: 1.1;
+}
+
+h1 { font-size: 2.6rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+p { margin: 0 0 1em; }
+
+a {
+  color: var(--color-red);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--color-red-dark);
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ---------- Filmstreifen-Lochung (Signatur-Element) ---------- */
+/* Erzeugt die typischen runden "Sprocket Holes" als
+   wiederholtes Hintergrundmuster am oberen/unteren Rand. */
+.film-strip-edge {
+  position: relative;
+}
+
+.film-strip-edge::before,
+.film-strip-edge::after {
+  content: "";
+  display: block;
+  height: 14px;
+  background-image: radial-gradient(circle, var(--color-cream) 4px, transparent 4.5px);
+  background-repeat: repeat-x;
+  background-size: 22px 14px;
+  background-position: 8px center;
+}
+
+.film-strip-edge::before { border-bottom: 2px solid var(--color-cream); }
+.film-strip-edge::after { border-top: 2px solid var(--color-cream); }
+
+/* ---------- Header (Kino-Marquee) ---------- */
+header.site-header {
+  background-color: var(--color-red);
+  color: var(--color-cream-light);
+  padding: 0.6rem 1.5rem 0.9rem;
+}
+
+header.site-header a {
+  color: var(--color-cream-light);
+  font-weight: 600;
+}
+
+header.site-header a:hover,
+header.site-header a:focus-visible {
+  color: var(--color-gold);
+  text-decoration: none;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  color: var(--color-cream-light) !important;
+}
+
+.header-links {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+/* ---------- Navigation ---------- */
+nav.site-nav {
+  background-color: var(--color-beige);
+  border-bottom: 3px solid var(--color-red);
+}
+
+nav.site-nav .nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+nav.site-nav a {
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+nav.site-nav a:hover,
+nav.site-nav a:focus-visible {
+  color: var(--color-red);
+}
+
+/* ---------- Layout ---------- */
+main,
+.detail-container,
+.page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.card {
+  background-color: var(--color-cream-light);
+  border: 1px solid var(--color-beige);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 1.75rem;
+}
+
+/* ---------- Buttons ---------- */
+button,
+.btn,
+input[type="submit"] {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  background-color: var(--color-red);
+  color: var(--color-cream-light);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.65rem 1.4rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+button:hover,
+.btn:hover,
+input[type="submit"]:hover {
+  background-color: var(--color-red-dark);
+  box-shadow: var(--shadow-strong);
+}
+
+button:active,
+.btn:active,
+input[type="submit"]:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-red);
+  border: 2px solid var(--color-red);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-red);
+  color: var(--color-cream-light);
+}
+
+/* ---------- Formulare ---------- */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--color-beige);
+  border-radius: var(--radius);
+  background-color: var(--color-cream-light);
+  color: var(--color-ink);
+  width: 100%;
+  max-width: 400px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-red);
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--color-ink-soft);
+}
+
+/* ---------- Tabellen (z.B. Filmverwaltung) ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--color-cream-light);
+  box-shadow: var(--shadow-soft);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+th {
+  background-color: var(--color-red);
+  color: var(--color-cream-light);
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--color-beige);
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr:hover td { background-color: var(--color-cream); }
+/* ---------- Detailseite mit Bild rechts ---------- */
+.detail-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap-reverse;
+}
+
+.detail-info {
+  flex: 1 1 380px;
+}
+
+.detail-image {
+  flex: 0 1 320px;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.detail-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-beige);
+  box-shadow: var(--shadow-strong);
+}
+
+.detail-image-placeholder {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background-color: var(--color-beige);
+  border-radius: var(--radius);
+  border: 2px dashed var(--color-red-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink-soft);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 1rem;
+}
+
+.rating-count {
+  display: block;
+  margin-top: 0.6rem;
+  color: var(--color-ink-soft);
+}
+/* ---------- Filmliste (Karten-Grid) ---------- */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.75rem;
+  margin-top: 1.5rem;
+}
+
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.movie-card:hover,
+.movie-card:focus-visible {
+  text-decoration: none;
+}
+
+.movie-card:hover .movie-poster img,
+.movie-card:focus-visible .movie-poster img {
+  transform: scale(1.03);
+}
+
+.movie-poster {
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--color-beige);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 0.6rem;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.movie-poster-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-beige);
+  border: 2px dashed var(--color-red-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink-soft);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.genre-badge {
+  align-self: flex-start;
+  background-color: var(--color-red);
+  color: var(--color-cream-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.4rem;
+}
+
+.movie-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--color-ink);
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.movie-card:hover .movie-title,
+.movie-card:focus-visible .movie-title {
+  color: var(--color-red);
+}

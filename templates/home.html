@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="detail-container">
+    <div class="card detail-container">
         {% if user.is_authenticated %}
             <h1>Willkommen, {{ user.username }}!</h1>
             <p>Du bist eingeloggt.</p>
-            <a href="{% url 'movie_list' %}">Show me the Movies!</a>
+            <a class="btn" href="{% url 'movie_list' %}">Show me the Movies!</a>
 
-            <form method="post" action="{% url 'logout' %}">
+            <form method="post" action="{% url 'logout' %}" style="margin-top: 1rem;">
                 {% csrf_token %}
-                <button type="submit">Logout</button>
+                <button type="submit" class="btn-secondary">Logout</button>
             </form>
 
         {% else %}
             <h1>Willkommen!</h1>
             <p>Du bist nicht eingeloggt.</p>
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'signup' %}">Sign Up</a>
+            <a class="btn" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-secondary" href="{% url 'signup' %}" style="margin-left: 0.75rem;">Sign Up</a>
         {% endif %}
     </div>
 {% endblock %}

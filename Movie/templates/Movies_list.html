@@ -31,17 +31,27 @@
 </select>
         <button type="submit">Suchen</button>
     </form>
-
-    {% if query %}
+{% if query %}
         <p>Suchergebnisse für: <strong>{{ query }}</strong></p>
     {% endif %}
 
-
-    {% for movie in all_movies %}
-        <div>
-            <a href='{% url 'movie_detail' movie.pk %}'>{{  movie.title }}</a>
-        </div>
-    {% empty %}
-        <p>Noch keine Movies vorhanden.</p>
-    {% endfor %}
+    <div class="movie-grid">
+        {% for movie in all_movies %}
+            <a class="movie-card" href='{% url 'movie_detail' movie.pk %}'>
+                <div class="movie-poster">
+                    {% if movie.movie_pic %}
+                        <img src="{{ movie.movie_pic.url }}" alt="Filmplakat von {{ movie.title }}">
+                    {% else %}
+                        <div class="movie-poster-placeholder">
+                            <span>Kein Bild</span>
+                        </div>
+                    {% endif %}
+                </div>
+                <span class="genre-badge">{{ movie.get_genre_display }}</span>
+                <h3 class="movie-title">{{ movie.title }}</h3>
+            </a>
+        {% empty %}
+            <p>Noch keine Movies vorhanden.</p>
+        {% endfor %}
+    </div>
 {% endblock %}
