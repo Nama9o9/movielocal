@@ -22,7 +22,7 @@
                 <a href="{% url 'movie_list' %}">Filme</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'shopping_cart_show' %}">
-                        Warenkorb ({{ user.shopping_cart_item_count }})
+                       Warenkorb ({{ user.shopping_cart_item_count }})
                     </a>
                 {% else %}
                     <a href="{% url 'shopping_cart_show' %}">Warenkorb (0)</a>

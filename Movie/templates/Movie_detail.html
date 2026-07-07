@@ -27,11 +27,11 @@
                 <a class="btn btn-medium" href="{% url 'select_shop' one_movie.pk 'Rental' %}">Ausleihen</a>
             </div>
 
-            {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
-                <a class="btn btn-secondary" href="{% url 'cs_movie_list' %}">← Zurück zur Kundenservice-Liste</a>
-            {% else %}
+{#            {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}#}
+{#                <a class="btn btn-secondary" href="{% url 'cs_movie_list' %}">← Zurück zur Kundenservice-Liste</a>#}
+{#            {% else %}#}
                 <a class="btn btn-secondary" href="{% url 'movie_list' %}">← Zurück zur Liste</a>
-            {% endif %}
+{#            {% endif %}#}
         </div>
 
         <div class="detail-image">

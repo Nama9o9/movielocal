@@ -19,7 +19,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('movie/', include('Movie.urls')),
 path('shop/', include('Shop.urls')),
 path('customerservice/', include('customerservice.urls')),
+    path('', RedirectView.as_view(url="/home", permanent=False), name='home'),
 ]
 
 if settings.DEBUG:

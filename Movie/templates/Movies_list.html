@@ -3,7 +3,7 @@
 {% block title %}Alle Movies{% endblock %}
 
 {% block content %}
-    <h1>Alle Movies</h1>
+    <h1>Alle Filme</h1>
 
     <form method="get" class="search-form">
         <input type="text" name="q" value="{{ query }}" placeholder="Suche nach Titel, Regisseur, Schauspieler...">
@@ -48,7 +48,7 @@
                 <h3 class="movie-title">{{ movie.title }}</h3>
             </a>
         {% empty %}
-            <p>Noch keine Movies vorhanden.</p>
+            <p>Noch keine Filme vorhanden.</p>
         {% endfor %}
     </div>
 {% endblock %}

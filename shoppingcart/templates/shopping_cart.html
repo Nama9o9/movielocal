@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Shopping cart{% endblock %}
+{% block title %}Warenkorb{% endblock %}
 
 {% block content %}
-<h1>Shopping Cart</h1>
+<h1>Warenkorb</h1>
     {% if shopping_cart_is_empty %}
-        <p>Your shopping cart is empty.</p>
+        <p>Dein Warenkorb ist leer.</p>
     {% else %}
         <div class="cart-list">
             {% for item in shopping_cart_items %}
@@ -17,12 +17,12 @@
             {% endfor %}
         </div>
 
-        <p class="cart-total">Total amount: <strong>{{ total }} €</strong></p>
+        <p class="cart-total">Gesamtbetrag: <strong>{{ total }} €</strong></p>
 
         <form method="POST" class="cart-actions">
             {% csrf_token %}
-            <button type="submit" name="empty" class="btn btn-secondary">Empty the shopping cart</button>
-            <button type="submit" name="checkout" class="btn btn-medium">Checkout and start watching!</button>
+            <button type="submit" name="empty" class="btn btn-secondary">Leere den Warenkorb</button>
+            <button type="submit" name="checkout" class="btn btn-medium">Checkout und hol dir den Film!</button>
         </form>
     {% endif %}
 
