@@ -37,8 +37,6 @@ class MovieListView(ListView):
 
         return movies
 
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q', '')
@@ -53,7 +51,11 @@ class MovieDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ratings'] = self.object.rating_set.all()
+        user = self.request.user
+        if user.is_authenticated and (user.role == 'S' or user.is_superuser):
+            context['ratings'] = self.object.rating_set.all()
+        else:
+            context['ratings'] = self.object.rating_set.filter(is_active=True)
         context['rating_form'] = RatingForm()
         return context
 

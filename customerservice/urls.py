@@ -7,4 +7,5 @@ urlpatterns = [
     path('movies/<int:pk>/manage/', views.cs_movie_edit_delete, name='cs_movie_edit_delete'),
     path('rating/<int:rating_id>/delete/', views.cs_delete_rating, name='cs_delete_rating'),
     path('ratings/reported/', views.cs_reported_ratings, name='cs_reported_ratings'),
+    path('rating/<int:rating_id>/toggle/', views.cs_toggle_rating, name='cs_toggle_rating'),
 ]

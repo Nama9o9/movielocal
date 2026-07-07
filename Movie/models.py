@@ -54,6 +54,8 @@ class Rating(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+
 
     class Meta:
         ordering = ['-timestamp']

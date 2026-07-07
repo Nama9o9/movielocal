@@ -93,20 +93,30 @@
                             {% if user.is_authenticated and user != rating.user %}
                                 <form method="post" action="{% url 'report_rating' rating.pk %}" class="rating-report-form">
                                     {% csrf_token %}
-                                    <textarea name="reason" placeholder="Optional - Warum möchten Sie die Bewertung melden? Maximal 300 Zeichen." maxlength="300" rows="5"></textarea>
+                                    <textarea name="reason" placeholder="Grund der Meldung (optional)" maxlength="300" rows="5"></textarea>
                                     <button type="submit">⚠️ Melden</button>
                                 </form>
                             {% endif %}
                         </div>
                         <div class="rating-footer-right">
                             {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
-                                <form method="post" action="{% url 'cs_delete_rating' rating.pk %}" onsubmit="return confirm('Möchtest du diese Bewertung als Staff-Mitglied wirklich löschen?');">
+                                <form method="post" action="{% url 'cs_toggle_rating' rating.pk %}" style="display:inline">
                                     {% csrf_token %}
-                                    <button type="submit">Bewertung löschen</button>
+                                    <button type="submit" class="btn-secondary">
+                                        {% if rating.is_active %}Deaktivieren{% else %}Aktivieren{% endif %}
+                                    </button>
+                                </form>
+                                <form method="post" action="{% url 'cs_delete_rating' rating.pk %}" onsubmit="return confirm('Möchtest du diese Bewertung als Staff-Mitglied wirklich löschen?');" style="display:inline">
+                                    {% csrf_token %}
+                                    <button type="submit">Kundenservice: Bewertung löschen</button>
                                 </form>
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
+
+                    {% if not rating.is_active %}
+                        <p class="rating-count"><em>Diese Bewertung ist aktuell deaktiviert und wird normalen Nutzern nicht angezeigt.</em></p>
                     {% endif %}
 
                 </li>

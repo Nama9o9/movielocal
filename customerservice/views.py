@@ -83,6 +83,21 @@ def cs_delete_rating(request, rating_id):
     return redirect('movie_detail', pk=movie_id)
 
 @login_required
+def cs_toggle_rating(request, rating_id):
+
+    if not (request.user.role == 'S' or request.user.is_superuser):
+        raise PermissionDenied
+
+    rating = get_object_or_404(Rating, pk=rating_id)
+    movie_id = rating.movie.id
+
+    if request.method == 'POST':
+        rating.is_active = not rating.is_active
+        rating.save()
+
+    return redirect('movie_detail', pk=movie_id)
+
+@login_required
 def cs_reported_ratings(request):
     if not (request.user.role == 'S' or request.user.is_superuser):
         raise PermissionDenied
