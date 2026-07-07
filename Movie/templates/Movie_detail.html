@@ -3,16 +3,16 @@
 {% block title %}{{ one_movie.title }}{% endblock %}
 
 {% block content %}
+     <h1 class="movie-detail-title">{{ one_movie.title }}</h1>
     <div class="detail-layout">
-        <div class="detail-container detail-info">
-            <h1>{{ one_movie.title }}</h1>
-            <p><strong>Beschreibung:</strong> {{ one_movie.description }}</p>
+        <div class="detail-info">
+            <p><strong>Beschreibung:</strong><br>{{ one_movie.description }}</p>
             <p><strong>Genre:</strong> {{ one_movie.get_genre_display }}</p>
             <p><strong>FSK:</strong> {{ one_movie.fsk }}</p>
             <p><strong>Jahr:</strong> {{ one_movie.year }}</p>
-            <p><strong>Regie:</strong> {{ one_movie.director }}</p>
+            <p><strong>Regie:</strong><br>{{ one_movie.director }}</p>
             <p><strong>Laufzeit:</strong> {{ one_movie.time }} min</p>
-            <p><strong>Hauptdarstellende:</strong> {{ one_movie.actors }}</p>
+            <p><strong>Hauptdarstellende:</strong><br>{{ one_movie.actors }}</p>
             <p><strong>Kaufpreis:</strong> {{ one_movie.price }} €</p>
             <p><strong>Leihgebühr:</strong> {{ one_movie.rental_price }} €</p>
 
@@ -23,8 +23,8 @@
             {% endif %}
 
             <div class="movie_actions">
-                <a class="btn" href="{% url 'select_shop' one_movie.pk 'Purchase' %}">Kaufen</a>
-                <a class="btn" href="{% url 'select_shop' one_movie.pk 'Rental' %}">Ausleihen</a>
+                <a class="btn btn-medium" href="{% url 'select_shop' one_movie.pk 'Purchase' %}">Kaufen</a>
+                <a class="btn btn-medium" href="{% url 'select_shop' one_movie.pk 'Rental' %}">Ausleihen</a>
             </div>
 
             {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
@@ -51,49 +51,62 @@
         {% endfor %}
     {% endif %}
 
-    <h3>Bewertungen</h3>
+   <h3>Bewertungen</h3>
     {% if ratings %}
-        <ul>
+        <ul class="rating-list">
             {% for rating in ratings %}
-                <li>
-                    <strong>{{ rating.user.username }}</strong> — {{ rating.stars }} Sterne
-                    <p>{{ rating.text }}</p>
+                <li class="rating-item">
+                    <div class="rating-header">
+                       <span class="rating-user">{{ rating.user.username }}</span> — {{ rating.get_stars_display }}
+                        {% if user.is_authenticated and user == rating.user %}
+                            <span class="rating-edit-links">
+                                <a href="{% url 'rating_edit' rating.pk %}">Bearbeiten</a> |
+                                <a href="{% url 'rating_delete' rating.pk %}">Löschen</a>
+                            </span>
+                        {% endif %}
+                    </div>
 
-                    {% if user.is_authenticated and user != rating.user %}
-                        <form method="post" action="{% url 'vote_rating' rating.pk 1 %}" style="display:inline">
-                            {% csrf_token %}
-                            <button type="submit">👍 Hilfreich</button>
-                        </form>
-                        <form method="post" action="{% url 'vote_rating' rating.pk 0 %}" style="display:inline">
-                            {% csrf_token %}
-                            <button type="submit">👎 Nicht hilfreich</button>
-                        </form>
-                    {% endif %}
+                    <p class="rating-text">{{ rating.text|linebreaksbr }}</p>
 
-                    <small class="rating-count">
-                        Hilfreich: {{ rating.helpful_count }} |
-                        Nicht hilfreich: {{ rating.not_helpful_count }}
-                    </small>
+                    <div class="rating-votes">
+                        {% if user.is_authenticated and user != rating.user %}
+                            <div class="rating-vote-buttons">
+                                <form method="post" action="{% url 'vote_rating' rating.pk 1 %}" style="display:inline">
+                                    {% csrf_token %}
+                                    <button type="submit">👍 Hilfreich</button>
+                                </form>
+                                <form method="post" action="{% url 'vote_rating' rating.pk 0 %}" style="display:inline">
+                                    {% csrf_token %}
+                                    <button type="submit">👎 Nicht hilfreich</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                        <small class="rating-count">
+                            Hilfreich: {{ rating.helpful_count }} |
+                            Nicht hilfreich: {{ rating.not_helpful_count }}
+                        </small>
+                    </div>
 
-                    {% if user.is_authenticated and user != rating.user %}
-                        <form method="post" action="{% url 'report_rating' rating.pk %}">
-                            {% csrf_token %}
-                            <input type="text" name="reason" placeholder="Grund der Meldung (optional)" maxlength="300">
-                            <button type="submit">⚠️ Melden</button>
-                        </form>
-                    {% endif %}
-
-                    {% if user.is_authenticated and user == rating.user %}
-                        <a href="{% url 'rating_edit' rating.pk %}">Bearbeiten</a> |
-                        <a href="{% url 'rating_delete' rating.pk %}">Löschen</a>
-                    {% endif %}
-
-                    <br><br>
-                    {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
-                        <form method="post" action="{% url 'cs_delete_rating' rating.pk %}" onsubmit="return confirm('Möchtest du diese Bewertung als Staff-Mitglied wirklich löschen?');" style="display:inline">
-                            {% csrf_token %}
-                            <button type="submit">Kundenservice: Bewertung löschen </button>
-                        </form>
+                    {% if user.is_authenticated and user.role == 'S' or user.is_superuser or user.is_authenticated and user != rating.user %}
+                    <div class="rating-footer">
+                        <div class="rating-footer-left">
+                            {% if user.is_authenticated and user != rating.user %}
+                                <form method="post" action="{% url 'report_rating' rating.pk %}" class="rating-report-form">
+                                    {% csrf_token %}
+                                    <textarea name="reason" placeholder="Optional - Warum möchten Sie die Bewertung melden? Maximal 300 Zeichen." maxlength="300" rows="5"></textarea>
+                                    <button type="submit">⚠️ Melden</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                        <div class="rating-footer-right">
+                            {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
+                                <form method="post" action="{% url 'cs_delete_rating' rating.pk %}" onsubmit="return confirm('Möchtest du diese Bewertung als Staff-Mitglied wirklich löschen?');">
+                                    {% csrf_token %}
+                                    <button type="submit">Bewertung löschen</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
                     {% endif %}
 
                 </li>
@@ -106,7 +119,18 @@
     <h3>Eigene Bewertung abgeben</h3>
     <form method="post">
         {% csrf_token %}
-        {{ rating_form.as_p }}
-        <button type="submit">Bewertung abgeben</button>
+        <div class="rating-form-fields">
+            <div class="rating-form-text">
+                <label for="{{ rating_form.text.id_for_label }}">Text:</label>
+                {{ rating_form.text }}
+                {{ rating_form.text.errors }}
+            </div>
+            <div class="rating-form-stars">
+                <label for="{{ rating_form.stars.id_for_label }}">Stars:</label>
+                {{ rating_form.stars }}
+                {{ rating_form.stars.errors }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-medium">Bewertung abgeben</button>
     </form>
 {% endblock %}

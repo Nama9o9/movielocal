@@ -43,11 +43,11 @@ class Movie(models.Model):
 
 class Rating(models.Model):
     STARS_CHOICES = [
-        (1, '1 Stern'),
-        (2, '2 Sterne'),
-        (3, '3 Sterne'),
-        (4, '4 Sterne'),
-        (5, '5 Sterne'),
+        (1, '⭐'),
+        (2, '⭐⭐'),
+        (3, '⭐⭐⭐'),
+        (4, '⭐⭐⭐⭐'),
+        (5, '⭐⭐⭐⭐⭐'),
     ]
     text = models.TextField(max_length=500)
     stars = models.IntegerField(choices=STARS_CHOICES, default=0)

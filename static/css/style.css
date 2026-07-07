@@ -121,7 +121,7 @@ header.site-header a:focus-visible {
 
 .brand {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 2.3rem;
   letter-spacing: 1px;
   color: var(--color-cream-light) !important;
 }
@@ -175,11 +175,34 @@ main,
   box-shadow: var(--shadow-soft);
   padding: 1.75rem;
 }
+.intro-text {
+  color: var(--color-ink-soft);
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin-bottom: 1.5rem;
+}
+.welcome-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
 
+.btn.btn-large {
+  font-size: 1.4rem;
+  padding: 1.25rem 2.5rem;
+  margin-top: 2rem;
+}
+.btn.btn-medium {
+  font-size: 1.1rem;
+  padding: 0.9rem 2rem;
+}
 /* ---------- Buttons ---------- */
 button,
 .btn,
 input[type="submit"] {
+  display: inline-block;
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.95rem;
@@ -279,16 +302,27 @@ tr:hover td { background-color: var(--color-cream); }
 
 /* ---------- Detailseite mit Bild rechts ---------- */
 .detail-layout {
-  display: flex;
-  gap: 2rem;
-  align-items: flex-start;
-  flex-wrap: wrap-reverse;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 4rem;
+  align-items: start;
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 750px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+  .detail-image {
+    order: -1;
+  }
 }
 
 .detail-info {
-  flex: 1 1 380px;
+  margin: 0;
 }
-.detail-info h1 {
+
+.movie-detail-title {
   font-size: 3.4rem;
 }
 
@@ -297,11 +331,8 @@ tr:hover td { background-color: var(--color-cream); }
   gap: 1.25rem;
   margin: 1.5rem 0;
 }
-
 .detail-image {
-  flex: 0 1 320px;
-  position: sticky;
-  top: 1.5rem;
+  margin: 0;
 }
 
 .detail-image img {
@@ -330,12 +361,95 @@ tr:hover td { background-color: var(--color-cream); }
   padding: 1rem;
 }
 
-.rating-count {
-  display: block;
-  margin-top: 0.6rem;
-  color: var(--color-ink-soft);
+.rating-list {
+  list-style: none;
+  margin: 0 0 2.5rem;
+  padding: 0;
 }
 
+.rating-item {
+  border: 2px solid var(--color-red);
+  border-radius: var(--radius);
+  background-color: var(--color-cream-light);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.rating-item:last-child {
+  margin-bottom: 0;
+}
+
+.rating-header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.rating-user {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.rating-edit-links {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.rating-text {
+  margin-bottom: 1rem;
+}
+
+.rating-votes {
+  margin-bottom: 1.5rem;
+}
+
+.rating-vote-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.rating-votes .rating-count {
+  margin-top: 0;
+}
+
+.rating-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-beige);
+}
+
+.rating-report-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.rating-report-form textarea {
+  width: 100%;
+  max-width: 100%;
+  resize: vertical;
+}
+
+.rating-footer-left,
+.rating-footer-right {
+  display: flex;
+}
+
+.rating-footer-left {
+  flex: 1 1 50%;
+}
+.rating-footer-right {
+  display: flex;
+}
 /* ---------- Filmliste (Karten-Grid) ---------- */
 .movie-grid {
   display: grid;
@@ -447,4 +561,103 @@ tr:hover td { background-color: var(--color-cream); }
 
 .search-form button {
   flex: 0 0 auto;
+}
+/* ---------- Shop-Auswahl ---------- */
+.shop-card {
+  border: 2px solid var(--color-red);
+  border-radius: var(--radius);
+  background-color: var(--color-cream-light);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.shop-card:last-child {
+  margin-bottom: 0;
+}
+
+.shop-name {
+  font-size: 1.6rem;
+  margin-bottom: 0.25rem;
+}
+
+.shop-address {
+  color: var(--color-ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+.shop-stock {
+  margin-bottom: 1rem;
+}
+/* ---------- Warenkorb ---------- */
+.cart-list {
+  border: 2px solid var(--color-red);
+  border-radius: var(--radius);
+  background-color: var(--color-cream-light);
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-beige);
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item-name {
+  font-weight: 600;
+}
+
+.cart-item-price {
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+.cart-total {
+  font-size: 1.3rem;
+  margin: 1.5rem 0;
+}
+
+.cart-total strong {
+  color: var(--color-red);
+}
+
+.cart-actions {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+/* ---------- Eigene Bewertung abgeben (2/3 Text, 1/3 Sterne) ---------- */
+.rating-form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+.rating-form-text {
+  flex: 2 1 320px;
+}
+
+.rating-form-stars {
+  flex: 1 1 160px;
+}
+
+.rating-form-text textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 160px;
 }

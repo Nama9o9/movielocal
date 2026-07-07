@@ -4,18 +4,18 @@
     <h2>{{ movie.title }} — Shop auswählen</h2>
 
 {% for availability in availabilities %}
-    <div>
-        <strong>{{ availability.shop.name }}</strong> ({{ availability.shop.address }})
-        —
+    <div class="shop-card">
+        <h3 class="shop-name">{{ availability.shop.name }}</h3>
+        <p class="shop-address">{{ availability.shop.adress }}</p>
         {% if transaction_type == 'Purchase' %}
-            {{ availability.purchase_stock }} verfügbar
+            <p class="shop-stock">Noch <strong>{{ availability.purchase_stock }}</strong> verfügbar</p>
         {% else %}
-            {{ availability.rental_stock }} verfügbar
+            <p class="shop-stock">Noch <strong>{{ availability.rental_stock }}</strong> verfügbar</p>
         {% endif %}
 
         <form method="post" action="{% url 'add_to_cart' movie.pk availability.shop.pk transaction_type %}">
             {% csrf_token %}
-            <button type="submit">Hier {% if transaction_type == 'Purchase' %}kaufen{% else %}ausleihen{% endif %}</button>
+            <button type="submit" class="btn btn-medium">Hier {% if transaction_type == 'Purchase' %}kaufen{% else %}ausleihen{% endif %}</button>
         </form>
     </div>
 {% empty %}

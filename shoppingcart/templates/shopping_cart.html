@@ -4,26 +4,27 @@
 {% block title %}Shopping cart{% endblock %}
 
 {% block content %}
-<h2>Shopping cart</h2>
+<h1>Shopping Cart</h1>
     {% if shopping_cart_is_empty %}
-        Your shopping cart is empty.<br>
+        <p>Your shopping cart is empty.</p>
     {% else %}
-        {% for item in shopping_cart_items %}
-            {{ item.product_name }}<br>
-            {{ item.price }} € x{{ item.quantity }}<br>
-            <br>
-        {% endfor %}
+        <div class="cart-list">
+            {% for item in shopping_cart_items %}
+                <div class="cart-item">
+                    <span class="cart-item-name">{{ item.product_name }}</span>
+                    <span class="cart-item-price">{{ item.price }} € × {{ item.quantity }}</span>
+                </div>
+            {% endfor %}
+        </div>
 
-        Total amount: {{ total }} €
+        <p class="cart-total">Total amount: <strong>{{ total }} €</strong></p>
 
-        <br><br>
-        <form method="POST">
+        <form method="POST" class="cart-actions">
             {% csrf_token %}
-            <button type="submit" name="empty">Empty the shopping cart</button><br>
-            <button type="submit" name="checkout">Checkout and start watching!</button>
+            <button type="submit" name="empty" class="btn btn-secondary">Empty the shopping cart</button>
+            <button type="submit" name="checkout" class="btn btn-medium">Checkout and start watching!</button>
         </form>
     {% endif %}
 
-    <br>
-    <a href="{% url 'home' %}">Back to Homepage</a>
+    <a class="back-link" href="{% url 'movie_list' %}">← Zurück zu den Filmen</a>
 {% endblock %}

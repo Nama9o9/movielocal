@@ -17,6 +17,10 @@
             <div class="header-links">
                 {% if user.is_authenticated %}
                     <a href="{% url 'profile' %}">Mein Profil</a>
+                {% endif %}
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'movie_list' %}">Filme</a>
+                {% if user.is_authenticated %}
                     <a href="{% url 'shopping_cart_show' %}">
                         Warenkorb ({{ user.shopping_cart_item_count }})
                     </a>
@@ -26,14 +30,13 @@
             </div>
         </div>
     </header>
-    <nav class="site-nav">
-        <div class="nav-inner">
-            <a href="{% url 'home' %}">Home</a>
-            {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
+    {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
+        <nav class="site-nav">
+            <div class="nav-inner">
                 <a href="{% url 'cs_movie_list' %}">Kundenservice (Filmverwaltung)</a>
-            {% endif %}
-        </div>
-    </nav>
+            </div>
+        </nav>
+    {% endif %}
     <main>
         {% block content %}
         {% endblock %}

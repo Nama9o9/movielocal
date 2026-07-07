@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="card detail-container">
+ <div class="card detail-container">
         {% if user.is_authenticated %}
-            <h1>Willkommen, {{ user.username }}!</h1>
-            <p>Du bist eingeloggt.</p>
-            <a class="btn" href="{% url 'movie_list' %}">Show me the Movies!</a>
-
-            <form method="post" action="{% url 'logout' %}" style="margin-top: 1rem;">
-                {% csrf_token %}
-                <button type="submit" class="btn-secondary">Logout</button>
-            </form>
+            <div class="welcome-header">
+                <h1>Willkommen, {{ user.username }}!</h1>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-secondary">Logout</button>
+                </form>
+            </div>
+            <p class="intro-text">Schön, dass du wieder da bist! Entdecke neue Filme oder wirf einen Blick in deinen Warenkorb.</p>
+            <a class="btn btn-large" href="{% url 'movie_list' %}">Show me the Movies!</a>
 
         {% else %}
             <h1>Willkommen!</h1>
-            <p>Du bist nicht eingeloggt.</p>
+            <p class="intro-text">Filme kaufen oder ausleihen – bei Händlern und Videotheken in deiner Nähe, statt bei globalen Streaming-Riesen. Melde dich an, um unseren Katalog zu durchstöbern und Filme direkt bei lokalen Anbietern zu reservieren.</p>
             <a class="btn" href="{% url 'login' %}">Login</a>
             <a class="btn btn-secondary" href="{% url 'signup' %}" style="margin-left: 0.75rem;">Sign Up</a>
         {% endif %}
