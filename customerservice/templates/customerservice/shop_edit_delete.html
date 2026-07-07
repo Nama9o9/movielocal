@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_create %}Shop hinzufügen{% else %}Shop bearbeiten/löschen{% endif %}{% endblock %}
+
+{% block content %}
+<h2>{% if is_create %}Neuen Shop anlegen{% else %}Shop verwalten: {{ shop.name }}{% endif %}</h2>
+
+{% if can_edit_delete %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if is_create %}
+            <button type="submit" class="btn">Shop speichern</button>
+        {% else %}
+            <button type="submit" name="edit" class="btn">Änderungen speichern</button>
+            <button type="submit" name="delete" class="btn btn-secondary" onclick="return confirm('Möchtest du diesen Shop wirklich unwiderruflich löschen?');">Shop löschen</button>
+        {% endif %}
+    </form>
+{% else %}
+    <p style="color: var(--color-red);">Sie haben keine Berechtigung für diese Aktion.</p>
+{% endif %}
+
+<a class="back-link" href="{% url 'cs_shop_list' %}">← Zurück zur Liste</a>
+{% endblock %}

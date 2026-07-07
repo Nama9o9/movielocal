@@ -697,3 +697,7 @@ tr:hover td { background-color: var(--color-cream); }
   margin-top: 0.75rem;
   margin-bottom: 0;
 }
+.order-item-address {
+  color: var(--color-ink-soft);
+  margin-bottom: 0.75rem;
+}

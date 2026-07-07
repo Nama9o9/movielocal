@@ -56,6 +56,7 @@ def show_shopping_cart(request):
                     {
                         'product_name': item.product_name,
                         'shop_name': item.shop.name if item.shop else '-',
+                        'shop_address': item.shop.adress if item.shop else '',
                         'transaction_type': item.get_transaction_type_display(),
                         'transaction_type_display': item.get_transaction_type_display(),
                         'price': str(item.price),

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CS - Shop Übersicht{% endblock %}
+
+{% block content %}
+<h2>Kundenservice — Shopverwaltung</h2>
+<p>Angemeldet als: <strong>{{ user.username }}</strong> (Rolle: {{ user.get_role_display }})</p>
+
+<a href="{% url 'cs_shop_create' %}" class="btn" style="margin-bottom: 1.5rem;">+ Neuen Shop hinzufügen</a>
+
+{% for shop in all_shops %}
+    <div class="shop-card">
+        <h3 class="shop-name">{{ shop.name }}</h3>
+        <p class="shop-address">{{ shop.adress }}</p>
+        <p><a href="{% url 'cs_shop_edit_delete' shop.pk %}">Shop bearbeiten / löschen</a></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Film</th>
+                    <th>Kaufbestand</th>
+                    <th>Leihbestand</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for availability in shop.shopmovieavailability_set.all %}
+                <tr>
+                    <td>{{ availability.movie.title }}</td>
+                    <td>{{ availability.purchase_stock }}</td>
+                    <td>{{ availability.rental_stock }}</td>
+                    <td>
+                        <form method="post" style="display:inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="availability_id" value="{{ availability.pk }}">
+                            <button type="submit" name="delete_availability" onclick="return confirm('Eintrag wirklich löschen?');">Löschen</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Für diesen Shop sind noch keine Filme hinterlegt.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <form method="post" class="rating-report-form" style="max-width: 500px; margin-top: 1rem;">
+            {% csrf_token %}
+            <input type="hidden" name="shop_id" value="{{ shop.pk }}">
+            {{ availability_form.as_p }}
+            <button type="submit" name="add_availability" class="btn btn-medium">Film hinzufügen</button>
+        </form>
+    </div>
+{% empty %}
+    <p>Keine Shops in der Datenbank vorhanden.</p>
+{% endfor %}
+{% endblock %}
