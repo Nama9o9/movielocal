@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Bestellung abgeschlossen</h2>
-    <p>Bitte bezahl <strong>{{ total }} €</strong> im Shop.</p>
+    <h1>Bestellung abgeschlossen</h1>
+    <p class="cart-total">Bitte bezahl <strong>{{ total }} €</strong> im Shop.</p>
 
-    <ul>
+    <div class="order-list">
         {% for item in items %}
-            <li>
-                {{ item.product_name }} — {{ item.shop_name }} ({{ item.transaction_type_display }}) — {{ item.price }} €
+            <div class="order-item">
+                <h3 class="order-item-title">{{ item.product_name }}</h3>
+                <p class="order-item-shop">Kann abgeholt werden in <strong>{{ item.shop_name }}</strong></p>
+                <p class="order-item-price">{{ item.transaction_type_display }} — {{ item.price }} €</p>
                 {% if item.transaction_type == 'Rental' %}
-                    <br>Bitte bis spätestens <strong>{{ item.due_date }}</strong> zurückbringen.
+                    <p class="order-item-due">Bitte bis spätestens <strong>{{ item.due_date }}</strong> zurückbringen.</p>
                 {% endif %}
-            </li>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 
     <a class="back-link" href="{% url 'movie_list' %}">← Zurück zu den Filmen</a>
 {% endblock %}

@@ -147,7 +147,8 @@ def add_to_cart(request, movie_pk, shop_pk, transaction_type):
         shopping_carts = ShoppingCart.objects.filter(myuser=request.user)
         shopping_cart = shopping_carts.first() if shopping_carts else ShoppingCart.objects.create(myuser=request.user)
 
-        product_name = f'{movie.title} [{movie.get_fsk_display()}] - [{movie.get_genre_display()}] ({movie.year})'
+        product_name = movie.title
+        #[{movie.get_fsk_display()}] [{movie.get_genre_display()}] ({movie.year})'
 
         due_date = None
         if transaction_type == 'Rental':

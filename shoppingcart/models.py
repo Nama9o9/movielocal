@@ -28,8 +28,9 @@ class ShoppingCart(models.Model):
 
         # Add movie to shopping cart
         product_id = movie.id
-        product_name = movie.title + ' [' + movie.get_fsk_display() + '] - ' \
-                       + movie.genre + ' (' + str(movie.year) + ')'
+        product_name = movie.title
+                        #+ ' [' + movie.get_fsk_display() + '] [' \
+                       #+ movie.genre + '] (' + str(movie.year) + ')')
 
         price = movie.price
         price = movie.price

@@ -661,3 +661,39 @@ tr:hover td { background-color: var(--color-cream); }
   max-width: 100%;
   min-height: 160px;
 }
+
+/* ---------- Bestellbestätigung ---------- */
+.order-list {
+  margin-top: 1.5rem;
+}
+
+.order-item {
+  border: 2px solid var(--color-red);
+  border-radius: var(--radius);
+  background-color: var(--color-cream-light);
+  padding: 2rem 2.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.order-item:last-child {
+  margin-bottom: 0;
+}
+
+.order-item-title {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.order-item-shop {
+  margin-bottom: 0.25rem;
+}
+
+.order-item-price {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.order-item-due {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
