@@ -1,15 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
-
 from .forms import MyUserCreationForm
 from .models import MyUser
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth import (
-    login as auth_login,
-)
 from django.contrib.auth.views import LoginView
-
+from .forms import MyUserEditForm
 
 # Create your views here.
 class MySignUpView(generic.CreateView):
@@ -29,6 +24,11 @@ class MyUserListView(generic.ListView):
 class MyProfileView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'profile.html'
 
+class MyProfileEditView(LoginRequiredMixin, generic.UpdateView):
+    model = MyUser
+    form_class = MyUserEditForm
+    template_name = 'registration/profile_edit.html'
+    success_url = reverse_lazy('profile')
 
-
-
+    def get_object(self):
+        return self.request.user

@@ -3,6 +3,7 @@
 {% block title %}{{ one_movie.title }}{% endblock %}
 
 {% block content %}
+
      <h1 class="movie-detail-title">{{ one_movie.title }}</h1>
     <div class="detail-layout">
         <div class="detail-info">
@@ -26,13 +27,9 @@
                 <a class="btn btn-medium" href="{% url 'select_shop' one_movie.pk 'Purchase' %}">Kaufen</a>
                 <a class="btn btn-medium" href="{% url 'select_shop' one_movie.pk 'Rental' %}">Ausleihen</a>
             </div>
-
-{#            {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}#}
-{#                <a class="btn btn-secondary" href="{% url 'cs_movie_list' %}">← Zurück zur Kundenservice-Liste</a>#}
-{#            {% else %}#}
-                <a class="btn btn-secondary" href="{% url 'movie_list' %}">← Zurück zur Liste</a>
-{#            {% endif %}#}
+           <a class="btn btn-secondary" href="{% url 'movie_list' %}">← Zurück zur Liste</a>
         </div>
+
 
         <div class="detail-image">
             {% if one_movie.movie_pic %}
@@ -108,7 +105,7 @@
                                 </form>
                                 <form method="post" action="{% url 'cs_delete_rating' rating.pk %}" onsubmit="return confirm('Möchtest du diese Bewertung als Staff-Mitglied wirklich löschen?');" style="display:inline">
                                     {% csrf_token %}
-                                    <button type="submit">Kundenservice: Bewertung löschen</button>
+                                    <button type="submit">Bewertung löschen</button>
                                 </form>
                             {% endif %}
                         </div>

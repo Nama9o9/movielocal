@@ -3,6 +3,18 @@
 {% block title %}Alle Movies{% endblock %}
 
 {% block content %}
+
+    <div class="card detail-container">
+        {% if user.is_authenticated %}
+            <p class="intro-text">Schön, dass du wieder da bist {{ user.username }}! Entdecke neue Filme oder wirf einen Blick in deinen Warenkorb.</p>
+        {% else %}
+            <h1>Willkommen!</h1>
+            <p class="intro-text">Filme kaufen oder ausleihen – bei Händlern und Videotheken in deiner Nähe, statt bei globalen Streaming-Riesen. Durchstöbere unseren Katalog und melde dich an um Filme direkt bei lokalen Anbietern zu sichern!</p>
+            <a class="btn" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-secondary" href="{% url 'signup' %}" style="margin-left: 0.75rem;">Sign Up</a>
+        {% endif %}
+    </div>
+
     <h1>Alle Filme</h1>
 
     <form method="get" class="search-form">
@@ -26,13 +38,14 @@
             <option value="H" {% if selected_genre == "H" %}selected{% endif %}>Horror</option>
         </select>
 
+        {# Durchschnitt #}
     <select name="min_rating">
     <option value="">Alle Bewertungen</option>
-    <option value="5" {% if selected_min_rating == "5" %}selected{% endif %}>Ab 5 Sternen</option>
-    <option value="4" {% if selected_min_rating == "4" %}selected{% endif %}>Ab 4 Sternen</option>
-    <option value="3" {% if selected_min_rating == "3" %}selected{% endif %}>Ab 3 Sternen</option>
-    <option value="2" {% if selected_min_rating == "2" %}selected{% endif %}>Ab 2 Sternen</option>
-    <option value="1" {% if selected_min_rating == "1" %}selected{% endif %}>Ab 1 Stern</option>
+    <option value="5" {% if selected_min_rating == "5" %}selected{% endif %}>∅ 5 Sterne</option>
+    <option value="4" {% if selected_min_rating == "4" %}selected{% endif %}>∅ 4 Sterne</option>
+    <option value="3" {% if selected_min_rating == "3" %}selected{% endif %}>∅ 3 Sterne</option>
+    <option value="2" {% if selected_min_rating == "2" %}selected{% endif %}>∅ 2 Sterne</option>
+    <option value="1" {% if selected_min_rating == "1" %}selected{% endif %}>∅ 1 Stern</option>
 </select>
         <button type="submit">Suchen</button>
     </form>

@@ -4,6 +4,7 @@
 {% block title %}CS - Shop Übersicht{% endblock %}
 
 {% block content %}
+      <a href="{% url 'cs_movie_list' %}"> <- Zurück zur Filmliste</a>
 <h2>Kundenservice — Shopverwaltung</h2>
 <p>Angemeldet als: <strong>{{ user.username }}</strong> (Rolle: {{ user.get_role_display }})</p>
 

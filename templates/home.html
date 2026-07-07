@@ -15,9 +15,10 @@
 
         {% else %}
             <h1>Willkommen!</h1>
-            <p class="intro-text">Filme kaufen oder ausleihen – bei Händlern und Videotheken in deiner Nähe, statt bei globalen Streaming-Riesen. Melde dich an, um unseren Katalog zu durchstöbern und Filme direkt bei lokalen Anbietern zu reservieren.</p>
+            <p class="intro-text">Filme kaufen oder ausleihen – bei Händlern und Videotheken in deiner Nähe, statt bei globalen Streaming-Riesen. Durchstöbere unseren Katalog und melde dich an um Filme direkt bei lokalen Anbietern zu sichern!</p>
             <a class="btn" href="{% url 'login' %}">Login</a>
             <a class="btn btn-secondary" href="{% url 'signup' %}" style="margin-left: 0.75rem;">Sign Up</a>
         {% endif %}
     </div>
+
 {% endblock %}

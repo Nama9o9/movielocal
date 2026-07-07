@@ -1,3 +1,6 @@
+from decimal import Decimal
+
+from django.core.validators import MinValueValidator
 from django.db import models
 from accounts.models import MyUser
 
@@ -22,12 +25,12 @@ class Movie(models.Model):
         ('H', 'Horror'),
     ]
     genre = models.CharField(choices=GENRE_CHOICES, max_length=2)
-    year = models.IntegerField()
+    year = models.PositiveIntegerField()
     director = models.TextField(max_length=100)
-    time = models.IntegerField()
+    time = models.PositiveIntegerField()
     actors = models.TextField(max_length=2000)
-    price = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
-    rental_price = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, validators=[MinValueValidator(Decimal('0.01'))])
+    rental_price = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True, validators=[MinValueValidator(Decimal('0.01'))])
     details_pdf = models.FileField(upload_to='movie_pdfs/', null=True, blank=True)
 
     # HIER GEHÖRT ES HIN: Bild für das Produkt

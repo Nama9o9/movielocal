@@ -4,6 +4,7 @@
 {% block title %}{% if is_create %}Film hinzufügen{% else %}Film bearbeiten/löschen{% endif %}{% endblock %}
 
 {% block content %}
+    <a href="{% url 'cs_movie_list' %}">← Zurück zur Liste</a>
 <h2>{% if is_create %}Neuen Film anlegen{% else %}Film verwalten: {{ movie.title }}{% endif %}</h2>
 
 {% if can_edit_delete %}
@@ -24,5 +25,5 @@
 {% endif %}
 
 <br>
-<a href="{% url 'cs_movie_list' %}">Zurück zur Liste</a>
+
 {% endblock %}

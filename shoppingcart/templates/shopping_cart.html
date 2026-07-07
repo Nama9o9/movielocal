@@ -4,6 +4,7 @@
 {% block title %}Warenkorb{% endblock %}
 
 {% block content %}
+    <a class="back-link" href="{% url 'movie_list' %}">← Zurück zu den Filmen</a>
 <h1>Warenkorb</h1>
     {% if shopping_cart_is_empty %}
         <p>Dein Warenkorb ist leer.</p>
@@ -26,5 +27,4 @@
         </form>
     {% endif %}
 
-    <a class="back-link" href="{% url 'movie_list' %}">← Zurück zu den Filmen</a>
 {% endblock %}

@@ -4,6 +4,7 @@
 {% block title %}Gemeldete Bewertungen{% endblock %}
 
 {% block content %}
+    <a href="{% url 'cs_movie_list' %}"> <- Zurück zur Filmliste</a>
 <h2>Gemeldete Bewertungen</h2>
 
 {% if reports %}
@@ -49,5 +50,5 @@
 {% endif %}
 
 <br>
-<a href="{% url 'cs_movie_list' %}">Zurück zur Filmliste</a>
+
 {% endblock %}

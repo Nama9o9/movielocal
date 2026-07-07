@@ -14,8 +14,8 @@ class Shop(models.Model):
 class ShopMovieAvailability(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    purchase_stock = models.IntegerField(default=0)
-    rental_stock = models.IntegerField(default=0)
+    purchase_stock = models.PositiveIntegerField(default=0)
+    rental_stock = models.PositiveIntegerField(default=0)
 
     class Meta:
         unique_together = ('shop', 'movie')

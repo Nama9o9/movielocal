@@ -16,8 +16,5 @@
     <p><strong>Nachname:</strong> {{ user.last_name }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
 
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
+    <a href="{% url 'profile_edit' %}">Profil bearbeiten</a>
 {% endblock %}
