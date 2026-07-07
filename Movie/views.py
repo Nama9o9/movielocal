@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Q
+from django.db.models import Q, Avg
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.urls import reverse
 from .models import Movie, Rating, RatingFeedback, RatingReport
@@ -19,8 +19,11 @@ class MovieListView(ListView):
         query = self.request.GET.get('q', '')
         fsk = self.request.GET.get('fsk', '')
         genre = self.request.GET.get('genre', '')
+        min_rating = self.request.GET.get('min_rating', '')
 
-        movies = Movie.objects.all()
+        movies = Movie.objects.annotate(
+            avg_rating=Avg('rating__stars', filter=Q(rating__is_active=True))
+        )
 
         if query:
             movies = movies.filter(
@@ -35,16 +38,22 @@ class MovieListView(ListView):
         if genre:
             movies = movies.filter(genre=genre)
 
+        if min_rating:
+            movies = movies.filter(avg_rating__gte=float(min_rating))
+
         return movies
+
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('q', '')
         context['selected_fsk'] = self.request.GET.get('fsk', '')
         context['selected_genre'] = self.request.GET.get('genre', '')
+        context['selected_min_rating'] = self.request.GET.get('min_rating', '')
         return context
 
-class MovieDetailView(LoginRequiredMixin, DetailView):
+class MovieDetailView(DetailView):
     model = Movie
     context_object_name = 'one_movie'
     template_name = 'Movie_detail.html'
@@ -61,6 +70,11 @@ class MovieDetailView(LoginRequiredMixin, DetailView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+
+        if not request.user.is_authenticated:
+            messages.error(request, 'Bitte melde dich an, um eine Bewertung abzugeben.')
+            return redirect('login')
+
         form = RatingForm(request.POST)
 
         # Prüfen, ob der User diesen Movie schon bewertet hat

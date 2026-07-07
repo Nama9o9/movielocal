@@ -126,21 +126,25 @@
         <p>Noch keine Bewertungen vorhanden.</p>
     {% endif %}
 
-    <h3>Eigene Bewertung abgeben</h3>
-    <form method="post">
-        {% csrf_token %}
-        <div class="rating-form-fields">
-            <div class="rating-form-text">
-                <label for="{{ rating_form.text.id_for_label }}">Text:</label>
-                {{ rating_form.text }}
-                {{ rating_form.text.errors }}
+   <h3>Eigene Bewertung abgeben</h3>
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="rating-form-fields">
+                <div class="rating-form-text">
+                    <label for="{{ rating_form.text.id_for_label }}">Text:</label>
+                    {{ rating_form.text }}
+                    {{ rating_form.text.errors }}
+                </div>
+                <div class="rating-form-stars">
+                    <label for="{{ rating_form.stars.id_for_label }}">Stars:</label>
+                    {{ rating_form.stars }}
+                    {{ rating_form.stars.errors }}
+                </div>
             </div>
-            <div class="rating-form-stars">
-                <label for="{{ rating_form.stars.id_for_label }}">Stars:</label>
-                {{ rating_form.stars }}
-                {{ rating_form.stars.errors }}
-            </div>
-        </div>
-        <button type="submit" class="btn btn-medium">Bewertung abgeben</button>
-    </form>
+            <button type="submit" class="btn btn-medium">Bewertung abgeben</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Melde dich an</a>, um eine eigene Bewertung abzugeben.</p>
+    {% endif %}
 {% endblock %}

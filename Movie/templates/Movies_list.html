@@ -25,6 +25,15 @@
             <option value="D" {% if selected_genre == "D" %}selected{% endif %}>Drama</option>
             <option value="H" {% if selected_genre == "H" %}selected{% endif %}>Horror</option>
         </select>
+
+    <select name="min_rating">
+    <option value="">Alle Bewertungen</option>
+    <option value="5" {% if selected_min_rating == "5" %}selected{% endif %}>Ab 5 Sternen</option>
+    <option value="4" {% if selected_min_rating == "4" %}selected{% endif %}>Ab 4 Sternen</option>
+    <option value="3" {% if selected_min_rating == "3" %}selected{% endif %}>Ab 3 Sternen</option>
+    <option value="2" {% if selected_min_rating == "2" %}selected{% endif %}>Ab 2 Sternen</option>
+    <option value="1" {% if selected_min_rating == "1" %}selected{% endif %}>Ab 1 Stern</option>
+</select>
         <button type="submit">Suchen</button>
     </form>
 
