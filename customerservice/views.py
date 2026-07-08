@@ -104,7 +104,6 @@ def cs_toggle_rating(request, rating_id):
     return redirect('movie_detail', pk=movie_id)
 
 @login_required
-@login_required
 def cs_reported_ratings(request):
 
     if not (request.user.role == 'S' or request.user.is_superuser):

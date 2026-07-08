@@ -89,38 +89,6 @@ def show_shopping_cart(request):
                    'total': total}
         return render(request, 'shopping_cart.html', context)
 
-
-# @login_required(login_url='/accounts/login/')
-# def pay(request):
-#     shopping_cart_is_empty = True
-#     paid = False
-#     form = None
-#
-#     if request.method == 'POST':
-#         myuser = request.user
-#         form = PaymentForm(request.POST)
-#         form.instance.myuser = myuser
-#         if form.is_valid():
-#             form.save()
-#             paid = True
-#
-#             # Empty the shopping cart
-#             ShoppingCart.objects.get(myuser=myuser).delete()
-#         else:
-#             print(form.errors)
-#
-#     else:  # request.method == 'GET'
-#         shopping_carts = ShoppingCart.objects.filter(myuser=request.user)
-#         if shopping_carts:
-#             shopping_cart = shopping_carts.first()
-#             shopping_cart_is_empty = False
-#             form = PaymentForm(initial={'amount': shopping_cart.get_total()})
-#
-#     context = {'shopping_cart_is_empty': shopping_cart_is_empty,
-#                'payment_form': form,
-#                'paid': paid,}
-#     return render(request, 'pay.html', context)
-
 @login_required
 @require_POST
 def add_to_cart(request, movie_pk, shop_pk, transaction_type):
