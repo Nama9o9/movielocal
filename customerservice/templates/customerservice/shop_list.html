@@ -20,8 +20,7 @@
             <thead>
                 <tr>
                     <th>Film</th>
-                    <th>Kaufbestand</th>
-                    <th>Leihbestand</th>
+                    <th>Kaufbestand / Leihbestand </th>
                     <th>Aktion</th>
                 </tr>
             </thead>
@@ -29,8 +28,15 @@
                 {% for availability in shop.shopmovieavailability_set.all %}
                 <tr>
                     <td>{{ availability.movie.title }}</td>
-                    <td>{{ availability.purchase_stock }}</td>
-                    <td>{{ availability.rental_stock }}</td>
+                    <td>
+                        <form method="post" style="display:inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="availability_id" value="{{ availability.pk }}">
+                            <input type="number" name="purchase_stock" value="{{ availability.purchase_stock }}" min="0" style="width: 60px;">
+                            <input type="number" name="rental_stock" value="{{ availability.rental_stock }}" min="0" style="width: 60px;">
+                            <button type="submit" name="update_availability">Speichern</button>
+                        </form>
+                    </td>
                     <td>
                         <form method="post" style="display:inline">
                             {% csrf_token %}
@@ -41,7 +47,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4">Für diesen Shop sind noch keine Filme hinterlegt.</td>
+                    <td colspan="3">Für diesen Shop sind noch keine Filme hinterlegt.</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -51,7 +57,7 @@
             {% csrf_token %}
             <input type="hidden" name="shop_id" value="{{ shop.pk }}">
             {{ availability_form.as_p }}
-            <button type="submit" name="add_availability" class="btn btn-medium">Film hinzufügen</button>
+            <button type="submit" name="add_availability" class="btn btn-medium">Neuen Film hinzufügen</button>
         </form>
     </div>
 {% empty %}

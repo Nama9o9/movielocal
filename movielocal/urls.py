@@ -15,23 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
-    path('home/', RedirectView.as_view(url="/movie/list", permanent=False), name='movie_list'),
-    path('shoppingcart/', include('shoppingcart.urls')),
-    path('movie/', include('Movie.urls')),
-path('shop/', include('Shop.urls')),
-path('customerservice/', include('customerservice.urls')),
-    # path('', RedirectView.as_view(url="/home", permanent=False), name='home'),
-    path('', RedirectView.as_view(url="/movie/list", permanent=False), name='movie_list'),
-]
+        path('accounts/', include('accounts.urls')),
+        path('home/', RedirectView.as_view(url="/movie/list", permanent=False), name='movie_list'),
+        path('shoppingcart/', include('shoppingcart.urls')),
+        path('movie/', include('Movie.urls')),
+    path('shop/', include('Shop.urls')),
+    path('customerservice/', include('customerservice.urls')),
+        # path('', RedirectView.as_view(url="/home", permanent=False), name='home'),
+        path('', RedirectView.as_view(url="/movie/list", permanent=False), name='movie_list'),
+    ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+        urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

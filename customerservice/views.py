@@ -127,15 +127,6 @@ def cs_dismiss_report(request, report_id):
 
     return redirect('cs_reported_ratings')
 
-@login_required
-def cs_shop_list(request):
-
-    if not (request.user.role == 'S' or request.user.is_superuser):
-        raise PermissionDenied
-
-    all_shops = Shop.objects.all()
-    return render(request, 'customerservice/shop_list.html', {'all_shops': all_shops})
-
 
 @login_required
 def cs_shop_create(request):
@@ -211,6 +202,19 @@ def cs_shop_list(request):
         availability_id = request.POST.get('availability_id')
         availability = get_object_or_404(ShopMovieAvailability, pk=availability_id)
         availability.delete()
+        return redirect('cs_shop_list')
+
+    elif request.method == 'POST' and 'update_availability' in request.POST:
+        availability_id = request.POST.get('availability_id')
+        availability = get_object_or_404(ShopMovieAvailability, pk=availability_id)
+
+        try:
+            availability.purchase_stock = int(request.POST.get('purchase_stock', 0))
+            availability.rental_stock = int(request.POST.get('rental_stock', 0))
+            availability.save()
+        except ValueError:
+            pass  # ungültige Eingabe (kein Integer) einfach ignorieren
+
         return redirect('cs_shop_list')
 
     all_shops = Shop.objects.all().prefetch_related('shopmovieavailability_set__movie')
