@@ -16,11 +16,6 @@ class MyLoginView(LoginView):
     template_name = 'registration/login.html'
 
 
-class MyUserListView(generic.ListView):
-    model = MyUser
-    context_object_name = 'all_myusers'
-    template_name = 'myuser_list.html'
-
 class MyProfileView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'profile.html'
 

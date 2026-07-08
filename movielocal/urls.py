@@ -30,7 +30,7 @@ urlpatterns = [
 path('shop/', include('Shop.urls')),
 path('customerservice/', include('customerservice.urls')),
     # path('', RedirectView.as_view(url="/home", permanent=False), name='home'),
-    path('', RedirectView.as_view(url="/movie/list", permanent=False), name='home_movie_list'),
+    path('', RedirectView.as_view(url="/movie/list", permanent=False), name='movie_list'),
 ]
 
 if settings.DEBUG:

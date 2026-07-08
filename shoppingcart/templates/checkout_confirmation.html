@@ -10,7 +10,7 @@
                 <h3 class="order-item-title">{{ item.product_name }}</h3>
                 <p class="order-item-shop">Kann abgeholt werden bei <strong>{{ item.shop_name }}</strong> an folgender Adresse:</p>
                 <p class="order-item-address">{{ item.shop_address }}</p>
-                <p class="order-item-price">{{ item.transaction_type_display }} — {{ item.price }} €</p>
+{#                <p class="order-item-price">{{ item.transaction_type_display }} — {{ item.price }} €</p>#}
                 {% if item.transaction_type == 'Rental' %}
                     <p class="order-item-due">Bitte bis spätestens <strong>{{ item.due_date }}</strong> zurückbringen.</p>
                 {% endif %}
