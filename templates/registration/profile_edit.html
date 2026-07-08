@@ -3,7 +3,8 @@
 {% block title %}Profil bearbeiten{% endblock %}
 
 {% block content %}
-    <a href="{% url 'profile' %}">← Zurück zum Profil</a>
+
+     <a class="back-link" href="{% url 'profile' %}"> <- Zurück zum Profil</a>
     <h2>Profil bearbeiten</h2>
 
     <form method="post" enctype="multipart/form-data">
