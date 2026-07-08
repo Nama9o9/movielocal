@@ -4,8 +4,7 @@
 {% block title %}{% if is_create %}Shop hinzufügen{% else %}Shop bearbeiten/löschen{% endif %}{% endblock %}
 
 {% block content %}
-      <a href="{% url 'cs_shop_list' %}"> <- Zurück zur Shopliste</a>
-<h2>{% if is_create %}Neuen Shop anlegen{% else %}Shop verwalten: {{ shop.name }}{% endif %}</h2>
+     <h2>{% if is_create %}Neuen Shop anlegen{% else %}Shop verwalten: {{ shop.name }}{% endif %}</h2>
 
 {% if can_edit_delete %}
     <form method="POST">

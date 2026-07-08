@@ -7,7 +7,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Speichern</button>
+        <button type="submit" class="btn btn-medium">Speichern</button>
     </form>
-    <a href="{% url 'movie_detail' pk=object.movie.pk %}">← Abbrechen</a>
+    <a class="back-link" href="{% url 'movie_detail' pk=object.movie.pk %}">← Abbrechen</a>
 {% endblock %}
