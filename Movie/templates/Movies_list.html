@@ -6,7 +6,8 @@
 
     <div class="card detail-container">
         {% if user.is_authenticated %}
-            <p class="intro-text">Schön, dass du wieder da bist {{ user.username }}! Entdecke neue Filme oder wirf einen Blick in deinen Warenkorb.</p>
+            <p class="welcome-greeting">Schön, dass du wieder da bist, {{ user.username }}!</p>
+            <p class="intro-text">Entdecke neue Filme oder wirf einen Blick in deinen Warenkorb.</p>
         {% else %}
             <h1>Willkommen!</h1>
             <p class="intro-text">Filme kaufen oder ausleihen – bei Händlern und Videotheken in deiner Nähe, statt bei globalen Streaming-Riesen. Durchstöbere unseren Katalog und melde dich an um Filme direkt bei lokalen Anbietern zu sichern!</p>
@@ -15,7 +16,7 @@
         {% endif %}
     </div>
 
-    <h1>Alle Filme</h1>
+    <h1 class="section-heading-spaced">Alle Filme</h1>
 
     <form method="get" class="search-form">
         <input type="text" name="q" value="{{ query }}" placeholder="Suche nach Titel, Regisseur, Schauspieler...">
@@ -41,7 +42,7 @@
         {# Durchschnitt #}
     <select name="min_rating">
     <option value="">Alle Bewertungen</option>
-    <option value="5" {% if selected_min_rating == "5" %}selected{% endif %}>∅ 5 Sterne</option>
+    <option value="5" {% if selected_min_rating == "5" %}selected{% endif %}>p∅ 5 Sterne</option>
     <option value="4" {% if selected_min_rating == "4" %}selected{% endif %}>∅ 4 Sterne</option>
     <option value="3" {% if selected_min_rating == "3" %}selected{% endif %}>∅ 3 Sterne</option>
     <option value="2" {% if selected_min_rating == "2" %}selected{% endif %}>∅ 2 Sterne</option>

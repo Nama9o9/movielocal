@@ -4,8 +4,8 @@
 {% block title %}Gemeldete Bewertungen{% endblock %}
 
 {% block content %}
-    <a href="{% url 'cs_movie_list' %}"> <- Zurück zur Filmliste</a>
-<h2>Gemeldete Bewertungen</h2>
+    <a class="back-link" href="{% url 'cs_movie_list' %}">← Zurück</a>
+    <h2>Gemeldete Bewertungen</h2>
 
 {% if reports %}
     <table>
@@ -35,7 +35,7 @@
                         <form method="post" action="{% url 'cs_delete_rating' report.rating.pk %}">
                             {% csrf_token %}
                             <button type="submit"
-                                    style="background-color: red; color: white; padding: 4px 8px;"
+                                    class="btn btn-medium"
                                     onclick="return confirm('Bewertung wirklich löschen?');">
                                 Bewertung löschen
                             </button>
@@ -48,7 +48,5 @@
 {% else %}
     <p>Keine gemeldeten Bewertungen vorhanden.</p>
 {% endif %}
-
-<br>
 
 {% endblock %}

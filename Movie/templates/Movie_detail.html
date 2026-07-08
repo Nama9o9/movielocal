@@ -27,7 +27,7 @@
                 <a class="btn btn-medium" href="{% url 'select_shop' one_movie.pk 'Purchase' %}">Kaufen</a>
                 <a class="btn btn-medium" href="{% url 'select_shop' one_movie.pk 'Rental' %}">Ausleihen</a>
             </div>
-           <a class="btn btn-secondary" href="{% url 'movie_list' %}">← Zurück zur Liste</a>
+           <a class="back-link" href="{% url 'movie_list' %}">← Zurück zur Liste</a>
         </div>
 
 
@@ -96,18 +96,18 @@
                             {% endif %}
                         </div>
                         <div class="rating-footer-right">
-                            {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
-                                <form method="post" action="{% url 'cs_toggle_rating' rating.pk %}" style="display:inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn-secondary">
-                                        {% if rating.is_active %}Deaktivieren{% else %}Aktivieren{% endif %}
-                                    </button>
-                                </form>
-                                <form method="post" action="{% url 'cs_delete_rating' rating.pk %}" onsubmit="return confirm('Möchtest du diese Bewertung als Staff-Mitglied wirklich löschen?');" style="display:inline">
-                                    {% csrf_token %}
-                                    <button type="submit">Bewertung löschen</button>
-                                </form>
-                            {% endif %}
+    {% if user.is_authenticated and user.role == 'S' or user.is_superuser %}
+        <form method="post" action="{% url 'cs_delete_rating' rating.pk %}" onsubmit="return confirm('Möchtest du diese Bewertung als Staff-Mitglied wirklich löschen?');" style="display:inline">
+            {% csrf_token %}
+            <button type="submit">Bewertung löschen</button>
+        </form>
+        <form method="post" action="{% url 'cs_toggle_rating' rating.pk %}" style="display:inline">
+            {% csrf_token %}
+            <button type="submit" class="btn-secondary">
+                {% if rating.is_active %}Deaktivieren{% else %}Aktivieren{% endif %}
+            </button>
+        </form>
+    {% endif %}
                         </div>
                     </div>
                     {% endif %}
